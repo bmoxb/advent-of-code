@@ -8,13 +8,13 @@ let get_number line =
   let right = get_digit line (fun x -> x - 1) (String.length line - 1) in
   (left * 10) + right
 
-let rec sum_of_numbers_in_lines next_line =
+let rec sum_numbers next_line =
   match next_line () with
-  | Some line -> get_number line + sum_of_numbers_in_lines next_line
+  | Some line -> get_number line + sum_numbers next_line
   | None -> 0
 
 let () =
   let chan = open_in "input.txt" in
   let next_line () = try Some (input_line chan) with End_of_file -> None in
-  let result = sum_of_numbers_in_lines next_line in
+  let result = sum_numbers next_line in
   Printf.printf "Answer: %d\n" result
